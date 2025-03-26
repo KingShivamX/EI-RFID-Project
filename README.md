@@ -1,36 +1,96 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Arduino RFID Authentication Project
 
-## Getting Started
+This project implements an IoT-based authentication system using an Arduino with an RFID reader and a Next.js web application.
 
-First, run the development server:
+## Hardware Requirements
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
+-   Arduino (Uno or similar)
+-   MFRC522 RFID Reader Module
+-   RFID Cards/Tags
+-   Jumper Wires
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+## Software Requirements
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+-   Node.js (v14 or higher)
+-   MongoDB (local installation)
+-   Arduino IDE
+-   Next.js
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+## Setup Instructions
 
-## Learn More
+### 1. Arduino Setup
 
-To learn more about Next.js, take a look at the following resources:
+1. Connect the MFRC522 RFID reader to Arduino:
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+    - RST -> Pin 9
+    - SDA(SS) -> Pin 10
+    - MOSI -> Pin 11
+    - MISO -> Pin 12
+    - SCK -> Pin 13
+    - VCC -> 3.3V
+    - GND -> GND
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+2. Install required libraries in Arduino IDE:
 
-## Deploy on Vercel
+    - MFRC522
+    - SPI
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+3. Upload the `arduino/rfid_auth.ino` sketch to your Arduino
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+### 2. Next.js Application Setup
+
+1. Install dependencies:
+
+    ```bash
+    cd ei-project
+    npm install
+    ```
+
+2. Start the development server:
+    ```bash
+    npm run dev
+    ```
+
+### 3. Arduino Bridge Setup
+
+1. Install dependencies:
+
+    ```bash
+    cd arduino-bridge
+    npm install
+    ```
+
+2. Update the COM port in `index.js` to match your Arduino's port
+
+3. Start the bridge:
+    ```bash
+    npm start
+    ```
+
+### 4. MongoDB Setup
+
+1. Ensure MongoDB is running locally
+2. The application will automatically connect to `mongodb://localhost:27017/rfid-auth`
+
+## Usage
+
+1. Open your browser and navigate to `http://localhost:3000`
+2. Tap an RFID card on the reader
+3. The web interface will show the authentication status
+4. Successful authentication will show a welcome message
+
+## Project Structure
+
+-   `/src` - Next.js application source code
+-   `/arduino` - Arduino sketch for RFID reader
+-   `/arduino-bridge` - Node.js bridge between Arduino and Next.js
+-   `/src/models` - MongoDB models
+-   `/src/app/api` - API routes
+
+## Security Notes
+
+-   This is a basic implementation for demonstration purposes
+-   In a production environment, implement proper security measures
+-   Store RFID card IDs securely
+-   Use HTTPS for all communications
+-   Implement proper session management
