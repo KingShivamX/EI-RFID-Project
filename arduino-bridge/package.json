@@ -3,6 +3,7 @@
     "version": "1.0.0",
     "description": "Bridge between Arduino RFID reader and Next.js application",
     "main": "index.js",
+    "type": "commonjs",
     "scripts": {
         "start": "node index.js"
     },
