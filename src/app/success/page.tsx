@@ -56,7 +56,7 @@ export default function SuccessPage() {
                     initial={{ opacity: 0 }}
                     animate={{ opacity: 1 }}
                     transition={{ delay: 0.2 }}
-                    className="text-foreground/80 text-lg font-medium"
+                    className="text-foreground/80 text-[1.8rem] font-bold"
                 >
                     EI IOT Project
                 </motion.p>
