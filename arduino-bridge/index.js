@@ -31,7 +31,7 @@ let isConnected = false
 
 async function setupSerialPort() {
     try {
-        const ports = await listPorts()
+        const ports = await listPorts() 
         if (ports.length === 0) {
             console.log("No serial ports found. Is your Arduino connected?")
             isConnected = false
