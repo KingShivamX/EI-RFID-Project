@@ -41,39 +41,71 @@ export default function SuccessPage() {
     }
 
     return (
-        <main className="min-h-screen flex flex-col items-center justify-start pt-16 p-4">
+        <main className="min-h-screen flex flex-col items-center justify-start pt-16 p-4 bg-gradient-to-br from-background to-background-light">
+            <div className="text-center mb-8 space-y-2">
+                <motion.h1
+                    initial={{ opacity: 0, y: -20 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    className="text-4xl font-bold gradient-text tracking-tight"
+                >
+                    Secure Access: RFID-Based
+                    <br />
+                    Authentication with Arduino
+                </motion.h1>
+                <motion.p
+                    initial={{ opacity: 0 }}
+                    animate={{ opacity: 1 }}
+                    transition={{ delay: 0.2 }}
+                    className="text-foreground/80 text-lg font-medium"
+                >
+                    EI IOT Project
+                </motion.p>
+            </div>
+
             <motion.div
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
-                className="card p-8 space-y-6 max-w-md w-full"
+                className="card p-8 space-y-8 max-w-md w-full"
             >
-                <div className="flex flex-col items-center gap-4">
+                <div className="flex flex-col items-center gap-6">
                     <motion.div
                         initial={{ scale: 0 }}
                         animate={{ scale: 1 }}
                         transition={{ type: "spring", stiffness: 200, damping: 10 }}
+                        className="bg-success/20 p-4 rounded-full"
                     >
                         <FaCheckCircle className="text-6xl text-success" />
                     </motion.div>
-                    <h1 className="text-3xl font-bold text-center gradient-text">Authentication Successful!</h1>
-                    {cardId && (
-                        <p className="text-lg text-card-foreground/90 text-center">
-                            Card ID: {cardId}
+                    <div className="space-y-2 text-center">
+                        <h2 className="text-2xl font-bold gradient-text">
+                            Authentication Successful!
+                        </h2>
+                        {cardId && (
+                            <motion.div
+                                initial={{ opacity: 0 }}
+                                animate={{ opacity: 1 }}
+                                transition={{ delay: 0.2 }}
+                                className="bg-background/50 rounded-lg p-3 mt-4"
+                            >
+                                <p className="text-lg text-foreground/90">
+                                    Card ID: <span className="font-medium text-primary">{cardId}</span>
+                                </p>
+                            </motion.div>
+                        )}
+                        <p className="text-foreground/80 text-lg mt-2">
+                            You have been successfully authenticated using your RFID card.
                         </p>
-                    )}
-                    <p className="text-card-foreground/80 text-center">
-                        You have been successfully authenticated using your RFID card.
-                    </p>
+                    </div>
                 </div>
 
                 <motion.button
                     whileHover={{ scale: 1.02 }}
                     whileTap={{ scale: 0.98 }}
-                    className="auth-button w-full px-6 py-3 rounded-xl
-                             flex items-center justify-center gap-2"
+                    className="auth-button w-full px-6 py-4 rounded-xl
+                             flex items-center justify-center gap-3 text-lg"
                     onClick={handleLogout}
                 >
-                    <FaSignOutAlt />
+                    <FaSignOutAlt className="text-xl" />
                     Logout
                 </motion.button>
             </motion.div>

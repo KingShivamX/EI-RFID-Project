@@ -55,6 +55,10 @@ export default function Home() {
                 if (data.cardId && data.cardId !== lastCardId) {
                     console.log("New card detected:", data.cardId)
                     setLastCardId(data.cardId)
+                    // Auto authenticate after 3 seconds
+                    setTimeout(() => {
+                        handleRFIDAuth(data.cardId)
+                    }, 1000)
                 }
             } catch (err) {
                 console.error("Error polling card data:", err)
@@ -107,40 +111,62 @@ export default function Home() {
     }
 
     return (
-        <main className="min-h-screen flex flex-col items-center justify-start pt-16 p-4">
+        <main className="min-h-screen flex flex-col items-center justify-start pt-16 p-4 bg-gradient-to-br from-background to-background-light">
+            <div className="text-center mb-8 space-y-2">
+                <motion.h1
+                    initial={{ opacity: 0, y: -20 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    className="text-4xl font-bold gradient-text tracking-tight"
+                >
+                    Secure Access: RFID-Based
+                    <br />
+                    Authentication with Arduino
+                </motion.h1>
+                <motion.p
+                    initial={{ opacity: 0 }}
+                    animate={{ opacity: 1 }}
+                    transition={{ delay: 0.2 }}
+                    className="text-foreground/80 text-lg font-medium"
+                >
+                    EI IOT Project
+                </motion.p>
+            </div>
             <motion.div
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
                 className="card p-8 space-y-6 max-w-md w-full"
             >
-                <div className="flex flex-col items-center gap-4">
+                <div className="flex flex-col items-center gap-6">
                     <motion.div
                         initial={{ scale: 0 }}
                         animate={{ scale: 1 }}
                         transition={{ type: "spring", stiffness: 200, damping: 10 }}
+                        className="bg-primary/20 p-4 rounded-full"
                     >
                         <FaKey className="text-6xl text-primary" />
                     </motion.div>
-                    <h1 className="text-3xl font-bold text-center gradient-text">
-                        RFID Authentication
-                    </h1>
-                    <div className="flex items-center gap-2">
-                        {connectionStatus === "connected" ? (
-                            <>
-                                <FaCheckCircle className="text-success" />
-                                <span className="text-success">Connection Established</span>
-                            </>
-                        ) : connectionStatus === "error" ? (
-                            <>
-                                <FaTimesCircle className="text-error" />
-                                <span className="text-error">Connection Error</span>
-                            </>
-                        ) : (
-                            <>
-                                <FaSpinner className="animate-spin text-warning" />
-                                <span className="text-warning">Checking Connection...</span>
-                            </>
-                        )}
+                    <div className="space-y-4 text-center">
+                        <h2 className="text-2xl font-bold gradient-text">
+                            RFID Authentication
+                        </h2>
+                        <div className="flex items-center justify-center gap-2 bg-background/50 rounded-lg p-2">
+                            {connectionStatus === "connected" ? (
+                                <>
+                                    <FaCheckCircle className="text-success" />
+                                    <span className="text-success font-medium">Connection Established</span>
+                                </>
+                            ) : connectionStatus === "error" ? (
+                                <>
+                                    <FaTimesCircle className="text-error" />
+                                    <span className="text-error font-medium">Connection Error</span>
+                                </>
+                            ) : (
+                                <>
+                                    <FaSpinner className="animate-spin text-warning" />
+                                    <span className="text-warning font-medium">Checking Connection...</span>
+                                </>
+                            )}
+                        </div>
                     </div>
                 </div>
 
@@ -153,7 +179,9 @@ export default function Home() {
                         className="w-full flex justify-center"
                     >
                         {error && (
-                            <p className="text-error text-center">{error}</p>
+                            <div className="bg-error/20 text-error font-medium px-4 py-2 rounded-lg">
+                                {error}
+                            </div>
                         )}
                     </motion.div>
                 </AnimatePresence>
